@@ -18,9 +18,15 @@ from django.urls import path, include
 from django.conf.urls import include
 
 from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_simplejwt import views as jwt_views
+
+from harimo import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', obtain_jwt_token),
-    path('api/', include('hedgehog.urls'))
+    path('api/', include('hedgehog.urls')),
+    path('hedgehog/', views.HedgeHogView.as_view(), name="hedgehog"),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
 ]
